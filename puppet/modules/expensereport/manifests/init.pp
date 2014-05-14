@@ -4,7 +4,7 @@ class expensereport {
     user      => 'expensereport',
     directory => '/home/expensereport/expensereport/src',
     proxy_hosts => [
-      'expensereport.placeholder',
+      'expensereport.tracy.com.br',
     ],
 
   }
