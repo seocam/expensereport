@@ -34,6 +34,9 @@ class Expense(models.Model):
 
     attendee = models.ForeignKey(User)
 
+    class Meta:
+        ordering = ["attendee__first_name"]
+
 
     def __unicode__(self):
         amount_formatted = u"{0:.2f}".format(self.amount)
