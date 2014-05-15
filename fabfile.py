@@ -13,7 +13,7 @@ from fabric.context_managers import prefix, cd, settings, shell_env
 ### Start of config
 
 APP_USER = APP_NAME = VENV_NAME = 'expensereport'
-REPO_URL = 'To be defined'
+REPO_URL = 'git@github.com:seocam/expensereport.git'
 
 
 environments = {
@@ -31,7 +31,7 @@ environments = {
         'superuser': 'root',
     },
     'prod': {
-        'hosts': [],
+        'hosts': ['162.243.230.194'],
         'port': 22,
         'is_vagrant': False,
         'superuser': 'root',
