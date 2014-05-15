@@ -21,6 +21,7 @@ class Expense(models.Model):
         ('food', _('Food')),
         ('swag', _('Swag')),
         ('hotel', _('Hotel')),
+        ('credentials', _('Event Credentials')),
         ('transport-long', _('Long Transportation (Flight/Train/Bus)')),
     )
 
