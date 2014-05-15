@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'south',
+    'rest_framework',
     'expenses',
 )
 
@@ -87,3 +88,9 @@ MEDIA_ROOT = '/usr/share/nginx/expensereport/media/'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

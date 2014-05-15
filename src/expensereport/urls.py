@@ -7,6 +7,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^expense/', include('expenses.urls', namespace='expenses')),
+
     # Examples:
     # url(r'^$', 'expensereport.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
