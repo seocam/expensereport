@@ -35,7 +35,7 @@ class Expense(models.Model):
     attendee = models.ForeignKey(User)
 
     class Meta:
-        ordering = ["attendee__first_name"]
+        ordering = ["attendee__first_name", "date"]
 
 
     def __unicode__(self):
