@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Expense
+from .models import Expense, PaypalAccount
 
 
 class ExpenseAdmin(admin.ModelAdmin):
@@ -11,5 +11,12 @@ class ExpenseAdmin(admin.ModelAdmin):
         obj.attendee = request.user
         obj.save()
 
+class PaypalAccountAdmin(admin.ModelAdmin):
+    exclude = ('user', )
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
 
 admin.site.register(Expense, ExpenseAdmin)
+admin.site.register(PaypalAccount, PaypalAccountAdmin)

@@ -44,3 +44,10 @@ class Expense(models.Model):
             self.description,
         )
 
+
+class PaypalAccount(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    paypal_account = models.EmailField()
+
+    def __unicode__(self):
+        return u"{} ({})".format(self.paypal_account, self.user.get_full_name())
