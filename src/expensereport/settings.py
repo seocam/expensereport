@@ -39,11 +39,13 @@ INSTALLED_APPS = (
 
     'south',
     'rest_framework',
+    'corsheaders',
     'expenses',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -89,6 +91,8 @@ MEDIA_ROOT = '/usr/share/nginx/expensereport/media/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/expense/api/.*$'
 
 try:
     from settings_local import *
