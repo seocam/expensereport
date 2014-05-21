@@ -10,5 +10,6 @@ router.register(r'', ExpenseViewSet)
 
 
 urlpatterns = patterns('',
+    url(r'', 'expenses.views.dashboard', name='dashboard'),
     url(r'^api', include(router.urls)),
 )

@@ -1,0 +1,302 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <!-- Title and other stuffs -->
+  <title>{% block title %}Mozilla Reps - Expense Report{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- TODO -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <!-- END TODO -->
+
+  <!-- Stylesheets -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Font awesome icon -->
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css"> 
+  <!-- jQuery UI -->
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" type="text/css"> 
+  <!-- Calendar -->
+  <link rel="stylesheet" href="{% static 'css/fullcalendar.css' %}" type="text/css">
+  <!-- prettyPhoto -->
+  <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}" type="text/css">  
+  <!-- Star rating -->
+  <link rel="stylesheet" href="{% static 'css/rateit.css' %}" type="text/css">
+  <!-- Date picker -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" type="text/css">
+  <!-- CLEditor -->
+  <link rel="stylesheet" href="{% static 'css/jquery.cleditor.css' %}" type="text/css">  
+  <!-- Data tables -->
+  <link rel="stylesheet" href="{% static 'css/jquery.dataTables.css' %}" type="text/css"> 
+  <!-- Bootstrap toggle -->
+  <link rel="stylesheet" href="{% static 'css/jquery.onoff.css' %}" type="text/css">
+  <!-- Main stylesheet -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+  <!-- Widgets stylesheet -->
+  <link href="{% static 'css/widgets.css' %}" rel="stylesheet" type="text/css">   
+
+
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">   
+  
+  <script src="{% static 'js/respond.min.js' %}"></script>
+  <!--[if lt IE 9]>
+  <script src="{% static 'js/html5shiv.js' %}"></script>
+  <![endif]-->
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'img/remo/shortcut.ico' %}">
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+  
+    <div class="conjtainer">
+      <!-- Menu button for smallar screens -->
+      <div class="navbar-header">
+		  <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+			<span>Menu</span>
+		  </button>
+		  <!-- Site name for smallar screens -->
+		  <a href="{% url 'expenses:dashboard' %}" class="navbar-brand hidden-lg">
+            <img src="{% static 'img/remo/remo_logo_medium.png' %}" alt="Mozilla Reps logo">
+            ExpenseReport
+          </a>
+		</div>
+      
+      
+
+      <!-- Navigation starts -->
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">         
+        <!-- Links -->
+        <ul class="nav navbar-nav pull-right">
+          <li class="dropdown pull-right">            
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <i class="fa fa-user"></i> Admin <b class="caret"></b>              
+            </a>
+            
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+              <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+              <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
+              <li><a href="login.html"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
+          </li>
+          
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+
+
+<!-- Header starts -->
+  <header>
+    <div class="container">
+      <div class="row">
+
+        <!-- Logo section -->
+        <div class="col-md-4">
+          <!-- Logo. -->
+          <div class="logo">
+            <h1>
+                <img src="{% static 'img/remo/remo_logo_medium.png' %}" alt="Mozilla Reps Logo" />
+                <a href="#">Expense<span class="bold">Report</span></a>
+            </h1>
+            <p class="meta">Mozilla Reps</p>
+          </div>
+          <!-- Logo ends -->
+        </div>
+
+        <!-- Button section -->
+        <div class="col-md-4">
+        </div>
+
+        <!-- Data section -->
+
+        <div class="col-md-4">
+          <div class="header-data pull-right">
+
+            {% comment %}
+            <!-- Traffic data -->
+            <div class="hdata">
+              <div class="mcol-left">
+                <!-- Icon with red background -->
+                <i class="fa fa-signal bred"></i> 
+              </div>
+              <div class="mcol-right">
+                <!-- Number of visitors -->
+                <p><a href="#">7000</a> <em>visits</em></p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            {% endcomment %}
+
+            <!-- Members data -->
+            <div class="hdata">
+              <div class="mcol-left">
+                <!-- Icon with blue background -->
+                <i class="fa fa-user bblue"></i> 
+              </div>
+              <div class="mcol-right">
+                <!-- Number of visitors -->
+                <p>{{ n_attendees }}<em>attendees</em></p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <!-- revenue data -->
+            <div class="hdata">
+              <div class="mcol-left">
+                <!-- Icon with green background -->
+                <i class="fa fa-money bgreen"></i> 
+              </div>
+              <div class="mcol-right">
+                <!-- Number of visitors -->
+                <p>R$ {{ total_amount }}<em>spent</em></p>
+              </div>
+              <div class="clearfix"></div>
+            </div>                        
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+<!-- Header ends -->
+
+<!-- Main content starts -->
+
+<div class="content">
+
+  	<!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
+
+        <!--- Sidebar navigation -->
+        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+        <ul id="nav">
+          <!-- Main menu with font awesome icon -->
+          <li><a href="{% url 'expenses:dashboard' %}"><i class="fa fa-home"></i> Dashboard</a>
+            <!-- Sub menu markup 
+            <ul>
+              <li><a href="#">Submenu #1</a></li>
+              <li><a href="#">Submenu #2</a></li>
+              <li><a href="#">Submenu #3</a></li>
+            </ul>-->
+          </li>
+        </ul>
+    </div>
+
+    <!-- Sidebar ends -->
+
+  	<!-- Main bar -->
+  	<div class="mainbar">
+
+      <!-- Page heading -->
+      <div class="page-head">
+        <h2 class="pull-left"><i class="fa fa-home"></i> FISL 15 - Dashboard</h2>
+
+        <!-- Breadcrumb -->
+        <div class="bread-crumb pull-right">
+          <a href="index.html"><i class="fa fa-home"></i> Home</a> 
+          <!-- Divider -->
+          <span class="divider">/</span> 
+          <a href="#" class="bread-current">FISL 15</a>
+        </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+      <!-- Page heading ends -->
+
+	    <!-- Matter -->
+
+	    <div class="matter">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="widget">
+                <div class="widget-head">
+                  <div class="pull-left">Expenses</div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="widget-content">
+                  <div class="padd">
+                    {% include 'table.html' %}
+                    <!-- Content goes here -->
+                  </div>
+                  <div class="widget-foot">
+                    <!-- Footer goes here -->
+                  </div>
+                </div>
+              </div>  
+              
+            </div>
+          </div>
+        </div>
+		  </div>
+
+		<!-- Matter ends -->
+
+    </div>
+
+   <!-- Mainbar ends -->	    	
+   <div class="clearfix"></div>
+
+</div>
+<!-- Content ends -->
+
+<!-- Footer starts -->
+<footer>
+{% comment %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+            <!-- Copyright info -->
+            <p class="copy">Copyright &copy; 2012 | <a href="#">Your Site</a> </p>
+      </div>
+    </div>
+  </div>
+{% endcomment %}
+</footer> 	
+
+<!-- Footer ends -->
+
+<!-- Scroll to top -->
+<span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span> 
+
+<!-- JS -->
+<script src="{% static 'js/jquery.js' %}"></script> <!-- jQuery -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script> <!-- Bootstrap -->
+<script src="{% static 'js/jquery-ui.min.js' %}"></script> <!-- jQuery UI -->
+<script src="{% static 'js/fullcalendar.min.js' %}"></script> <!-- Full Google Calendar - Calendar -->
+<script src="{% static 'js/jquery.rateit.min.js' %}"></script> <!-- RateIt - Star rating -->
+<script src="{% static 'js/jquery.prettyPhoto.js' %}"></script> <!-- prettyPhoto -->
+<script src="{% static 'js/jquery.slimscroll.min.js' %}"></script> <!-- jQuery Slim Scroll -->
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script> <!-- Data tables -->
+
+<!-- jQuery Flot -->
+<script src="{% static 'js/excanvas.min.js' %}"></script>
+<script src="{% static 'js/jquery.flot.js' %}"></script>
+<script src="{% static 'js/jquery.flot.resize.js' %}"></script>
+<script src="{% static 'js/jquery.flot.pie.js' %}"></script>
+<script src="{% static 'js/jquery.flot.stack.js' %}"></script>
+
+<script src="{% static 'js/sparklines.js' %}"></script> <!-- Sparklines -->
+<script src="{% static 'js/jquery.cleditor.min.js' %}"></script> <!-- CLEditor -->
+<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script> <!-- Date picker -->
+<script src="{% static 'js/jquery.onoff.min.js' %}"></script> <!-- Bootstrap Toggle -->
+<script src="{% static 'js/filter.js' %}"></script> <!-- Filter for support page -->
+<script src="{% static 'js/custom.js' %}"></script> <!-- Custom codes -->
+<script src="{% static 'js/charts.js' %}"></script> <!-- Charts & Graphs -->
+
+</body>
+</html>

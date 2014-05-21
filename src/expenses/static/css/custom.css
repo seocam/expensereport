@@ -1,0 +1,34 @@
+
+.logo p.meta {
+   padding-left: 46px;
+}
+
+.logo img {
+   height: 46px;
+}
+
+.navbar-brand img {
+   height: 32px;
+   padding-bottom: 3px;
+}
+
+.navbar-brand {
+   padding-top: 10px;
+   padding-right: 10px;
+}
+
+.page-tables .dataTables_filter input {
+   line-height: 16px
+}
+
+header .header-data .hdata {
+    width: 120px;
+}
+
+.mcol-left {
+    width: 40%;
+}
+
+.mcol-right {
+    width: 60%;
+}
