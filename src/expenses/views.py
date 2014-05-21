@@ -1,3 +1,5 @@
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Sum
 from django.contrib.auth.models import User
@@ -15,6 +17,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
 
+@login_required
 def dashboard(request):
     n_attendees = User.objects.count()
     total_amount = Expense.objects.aggregate(Sum('amount'))
