@@ -91,6 +91,8 @@ MEDIA_ROOT = '/usr/share/nginx/expensereport/media/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+STATICFILES_STORAGE = 'storage.CachedStaticFilesStorage'
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/expense/api/.*$'
 
