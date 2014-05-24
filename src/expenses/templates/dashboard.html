@@ -3,17 +3,6 @@
 
 {% block inline-js %}
     $(function () {
-        var data = [];
-        var series = Math.floor(Math.random()*10)+1;
-        for( var i = 0; i<series; i++)
-        {
-            data[i] = { label: "Series"+(i+1), data: Math.floor(Math.random()*100)+1 }
-        }
-
-        function labelFormatter(label, series) {
-            return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
-        }
-        
         pie_chart_options = {
             series: {
                 pie: {
@@ -25,8 +14,20 @@
             }
         };
 
-        $.plot($("#pie-chart-categories"), data, pie_chart_options);
-        $.plot($("#pie-chart-attendees"), data, pie_chart_options);
+        var category_data = [
+        {% for expense in expense_by_category %}
+            {'label': '{{ expense.category }}' , 'data': {{ expense.amount__sum }} },
+        {% endfor %}
+        ];
+        $.plot($("#pie-chart-categories"), category_data, pie_chart_options);
+
+        var attendee_data = [
+        {% for expense in expense_by_attendee %}
+            {'label': '{{ expense.attendee__first_name }}' ,
+             'data': {{ expense.amount__sum }} },
+        {% endfor %}
+        ];
+        $.plot($("#pie-chart-attendees"), attendee_data, pie_chart_options);
     });
 {% endblock %}
 

@@ -34,6 +34,10 @@ def dashboard(request):
             '<a href="{}">link</a>'.format(expense.receipt.url),
         ))
 
+    expense_by_category = Expense.objects.values('category').\
+                                          annotate(Sum('amount')).order_by()
+    expense_by_attendee = Expense.objects.values('attendee__first_name').\
+                                          annotate(Sum('amount')).order_by()
     context = {
         'headers': (
             'Name',
@@ -45,6 +49,8 @@ def dashboard(request):
         ),
         'data': expenses,
         'n_attendees': n_attendees,
+        'expense_by_category': expense_by_category,
+        'expense_by_attendee': expense_by_attendee,
         'total_amount': total_amount['amount__sum'],
     }
 
