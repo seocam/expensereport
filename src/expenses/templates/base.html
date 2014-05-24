@@ -17,31 +17,31 @@
   <!-- Stylesheets -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
   <!-- Font awesome icon -->
-  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css"> 
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
   <!-- jQuery UI -->
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" type="text/css"> 
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" type="text/css">
   <!-- Calendar -->
   <link rel="stylesheet" href="{% static 'css/fullcalendar.css' %}" type="text/css">
   <!-- prettyPhoto -->
-  <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}" type="text/css">  
+  <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}" type="text/css">
   <!-- Star rating -->
   <link rel="stylesheet" href="{% static 'css/rateit.css' %}" type="text/css">
   <!-- Date picker -->
   <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" type="text/css">
   <!-- CLEditor -->
-  <link rel="stylesheet" href="{% static 'css/jquery.cleditor.css' %}" type="text/css">  
+  <link rel="stylesheet" href="{% static 'css/jquery.cleditor.css' %}" type="text/css">
   <!-- Data tables -->
-  <link rel="stylesheet" href="{% static 'css/jquery.dataTables.css' %}" type="text/css"> 
+  <link rel="stylesheet" href="{% static 'css/jquery.dataTables.css' %}" type="text/css">
   <!-- Bootstrap toggle -->
   <link rel="stylesheet" href="{% static 'css/jquery.onoff.css' %}" type="text/css">
   <!-- Main stylesheet -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
   <!-- Widgets stylesheet -->
-  <link href="{% static 'css/widgets.css' %}" rel="stylesheet" type="text/css">   
+  <link href="{% static 'css/widgets.css' %}" rel="stylesheet" type="text/css">
 
 
-  <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">   
-  
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+
   <script src="{% static 'js/respond.min.js' %}"></script>
   <!--[if lt IE 9]>
   <script src="{% static 'js/html5shiv.js' %}"></script>
@@ -55,7 +55,7 @@
 {% block body %}
 
 <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
-  
+
     <div class="conjtainer">
       <!-- Menu button for smallar screens -->
       <div class="navbar-header">
@@ -68,18 +68,18 @@
             ExpenseReport
           </a>
 		</div>
-      
-      
+
+
 
       <!-- Navigation starts -->
-      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">         
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <!-- Links -->
         <ul class="nav navbar-nav pull-right">
-          <li class="dropdown pull-right">            
+          <li class="dropdown pull-right">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <i class="fa fa-user"></i> {% firstof user.first_name user.username %} <b class="caret"></b>              
+              <i class="fa fa-user"></i> {% firstof user.first_name user.username %} <b class="caret"></b>
             </a>
-            
+
             <!-- Dropdown menu -->
             <ul class="dropdown-menu">
               {% comment %}
@@ -89,7 +89,7 @@
               <li><a href="{% url 'logout' %}?next={% url 'expenses:dashboard' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
             </ul>
           </li>
-          
+
         </ul>
       </nav>
 
@@ -129,7 +129,7 @@
             <div class="hdata">
               <div class="mcol-left">
                 <!-- Icon with red background -->
-                <i class="fa fa-signal bred"></i> 
+                <i class="fa fa-signal bred"></i>
               </div>
               <div class="mcol-right">
                 <!-- Number of visitors -->
@@ -143,7 +143,7 @@
             <div class="hdata">
               <div class="mcol-left">
                 <!-- Icon with blue background -->
-                <i class="fa fa-user bblue"></i> 
+                <i class="fa fa-user bblue"></i>
               </div>
               <div class="mcol-right">
                 <!-- Number of visitors -->
@@ -156,14 +156,14 @@
             <div class="hdata">
               <div class="mcol-left">
                 <!-- Icon with green background -->
-                <i class="fa fa-money bgreen"></i> 
+                <i class="fa fa-money bgreen"></i>
               </div>
               <div class="mcol-right">
                 <!-- Number of visitors -->
                 <p>R$ {{ total_amount }}<em>spent</em></p>
               </div>
               <div class="clearfix"></div>
-            </div>                        
+            </div>
 
           </div>
         </div>
@@ -187,7 +187,7 @@
         <ul id="nav">
           <!-- Main menu with font awesome icon -->
           <li><a href="{% url 'expenses:dashboard' %}"><i class="fa fa-home"></i> Dashboard</a>
-            <!-- Sub menu markup 
+            <!-- Sub menu markup
             <ul>
               <li><a href="#">Submenu #1</a></li>
               <li><a href="#">Submenu #2</a></li>
@@ -208,9 +208,9 @@
 
         <!-- Breadcrumb -->
         <div class="bread-crumb pull-right">
-          <a href="index.html"><i class="fa fa-home"></i> Home</a> 
+          <a href="index.html"><i class="fa fa-home"></i> Home</a>
           <!-- Divider -->
-          <span class="divider">/</span> 
+          <span class="divider">/</span>
           <a href="#" class="bread-current">FISL 15</a>
         </div>
 
@@ -233,15 +233,15 @@
                 </div>
                 <div class="widget-content">
                   <div class="padd">
-                    {% include 'table.html' %}
+                    {% include 'includes/table.html' %}
                     <!-- Content goes here -->
                   </div>
                   <div class="widget-foot">
                     <!-- Footer goes here -->
                   </div>
                 </div>
-              </div>  
-              
+              </div>
+
             </div>
           </div>
         </div>
@@ -274,7 +274,7 @@
 <!-- Footer ends -->
 
 <!-- Scroll to top -->
-<span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span> 
+<span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
 
 <!-- JS -->
 <script src="{% static 'js/jquery.js' %}"></script> <!-- jQuery -->
