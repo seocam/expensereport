@@ -8,6 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^expense/', include('expenses.urls', namespace='expenses')),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', name="login"),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name="logout"),
+
 
     # Examples:
     # url(r'^$', 'expensereport.views.home', name='home'),
