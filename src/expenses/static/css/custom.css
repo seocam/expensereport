@@ -36,3 +36,7 @@ header .header-data .hdata {
 .table-responsive td {
     max-width: 200px;
 }
+
+.pie-chart {
+    height: 300px;
+}

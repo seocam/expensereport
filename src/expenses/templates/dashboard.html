@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+
+{% block inline-js %}
+    $(function () {
+        var data = [];
+        var series = Math.floor(Math.random()*10)+1;
+        for( var i = 0; i<series; i++)
+        {
+            data[i] = { label: "Series"+(i+1), data: Math.floor(Math.random()*100)+1 }
+        }
+
+        function labelFormatter(label, series) {
+            return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+        }
+        
+        pie_chart_options = {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            legend: {
+                show: false
+            }
+        };
+
+        $.plot($("#pie-chart-categories"), data, pie_chart_options);
+        $.plot($("#pie-chart-attendees"), data, pie_chart_options);
+    });
+{% endblock %}
+
+{% block matter %}
+
+<div class="col-md-6">
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Categories</div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+      <div class="padd">
+        <div id="pie-chart-categories" class="pie-chart"></div>
+      </div>
+      <div class="widget-foot">
+        <!-- Footer goes here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Attendees</div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+      <div class="padd">
+        <div id="pie-chart-attendees" class="pie-chart"></div>
+      </div>
+      <div class="widget-foot">
+        <!-- Footer goes here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="widget">
+    <div class="widget-head">
+      <div class="pull-left">Expenses</div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="widget-content">
+      <div class="padd">
+        {% include 'includes/table.html' %}
+      </div>
+      <div class="widget-foot">
+        <!-- Footer goes here -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

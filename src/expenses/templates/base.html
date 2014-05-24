@@ -174,87 +174,66 @@
 
 <!-- Header ends -->
 
-<!-- Main content starts -->
-
+<!-- Content starts -->
+{% block content %}
 <div class="content">
 
-  	<!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
 
-        <!--- Sidebar navigation -->
-        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
-        <ul id="nav">
-          <!-- Main menu with font awesome icon -->
-          <li><a href="{% url 'expenses:dashboard' %}"><i class="fa fa-home"></i> Dashboard</a>
-            <!-- Sub menu markup
-            <ul>
-              <li><a href="#">Submenu #1</a></li>
-              <li><a href="#">Submenu #2</a></li>
-              <li><a href="#">Submenu #3</a></li>
-            </ul>-->
-          </li>
-        </ul>
-    </div>
+    <!--- Sidebar navigation -->
+    <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+    <ul id="nav">
+      <!-- Main menu with font awesome icon -->
+      <li><a href="{% url 'expenses:dashboard' %}"><i class="fa fa-home"></i> Dashboard</a>
+        <!-- Sub menu markup
+        <ul>
+          <li><a href="#">Submenu #1</a></li>
+          <li><a href="#">Submenu #2</a></li>
+          <li><a href="#">Submenu #3</a></li>
+        </ul>-->
 
-    <!-- Sidebar ends -->
+      </li>
+    </ul>
+  </div>
+  <!-- Sidebar ends -->
 
-  	<!-- Main bar -->
-  	<div class="mainbar">
+  <!-- Main bar -->
+  <div class="mainbar">
 
-      <!-- Page heading -->
-      <div class="page-head">
-        <h2 class="pull-left"><i class="fa fa-home"></i> FISL 15 - Dashboard</h2>
+    <!-- Page heading -->
+    <div class="page-head">
+      <h2 class="pull-left"><i class="fa fa-home"></i> FISL 15 - Dashboard</h2>
 
-        <!-- Breadcrumb -->
-        <div class="bread-crumb pull-right">
-          <a href="index.html"><i class="fa fa-home"></i> Home</a>
-          <!-- Divider -->
-          <span class="divider">/</span>
-          <a href="#" class="bread-current">FISL 15</a>
-        </div>
-
-        <div class="clearfix"></div>
-
+      <!-- Breadcrumb -->
+      <div class="bread-crumb pull-right">
+        <a href="index.html"><i class="fa fa-home"></i> Home</a>
+        <!-- Divider -->
+        <span class="divider">/</span>
+        <a href="#" class="bread-current">FISL 15</a>
       </div>
-      <!-- Page heading ends -->
-
-	    <!-- Matter -->
-
-	    <div class="matter">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-
-              <div class="widget">
-                <div class="widget-head">
-                  <div class="pull-left">Expenses</div>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <div class="padd">
-                    {% include 'includes/table.html' %}
-                    <!-- Content goes here -->
-                  </div>
-                  <div class="widget-foot">
-                    <!-- Footer goes here -->
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-		  </div>
-
-		<!-- Matter ends -->
-
+      <div class="clearfix"></div>
     </div>
+    <!-- Page heading ends -->
+	
+	<!-- Matter -->
+	<div class="matter">
+	  <div class="container">
+	    <div class="row">
+          {% block matter %}{% endblock %}
+	    </div>
+	  </div>
+    </div>
+	<!-- End Matter -->
 
-   <!-- Mainbar ends -->	    	
-   <div class="clearfix"></div>
+  </div>
+  <!-- Mainbar ends -->
 
+  <div class="clearfix"></div>
 </div>
+
+{% endblock content %}
 <!-- Content ends -->
 
 <!-- Footer starts -->
@@ -300,6 +279,10 @@
 <script src="{% static 'js/filter.js' %}"></script> <!-- Filter for support page -->
 <script src="{% static 'js/custom.js' %}"></script> <!-- Custom codes -->
 <script src="{% static 'js/charts.js' %}"></script> <!-- Charts & Graphs -->
+
+<script type="text/javascript">
+{% block inline-js %}{% endblock %}
+</script>
 
 {% endblock %}
 </body>

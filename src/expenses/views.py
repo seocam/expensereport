@@ -48,4 +48,4 @@ def dashboard(request):
         'total_amount': total_amount['amount__sum'],
     }
 
-    return render(request, 'base.html', context)
+    return render(request, 'dashboard.html', context)

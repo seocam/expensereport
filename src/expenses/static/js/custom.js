@@ -31,31 +31,6 @@ $(document).ready(function(){
       menu_li.addClass("open");
     }
   });
-
-/* Old Code 
-
-  $("#nav > li > a").on('click',function(e){
-      if($(this).parent().hasClass("has_sub")) {
-       
-		  e.preventDefault();
-
-		  if(!$(this).hasClass("subdrop")) {
-			// hide any open menus and remove all other classes
-			$("#nav li ul").slideUp(350);
-			$("#nav li a").removeClass("subdrop");
-			
-			// open our new menu and add the open class
-			$(this).next("ul").slideDown(350);
-			$(this).addClass("subdrop");
-		  }
-		  
-		  else if($(this).hasClass("subdrop")) {
-			$(this).removeClass("subdrop");
-			$(this).next("ul").slideUp(350);
-		  } 
-      }   
-      
-  }); */
 });
 
 $(document).ready(function(){
@@ -276,47 +251,6 @@ $(function(){
 	});
 
 });
-
-/* jQuery Notification */
-
-$(document).ready(function(){
-
-  setTimeout(function() {noty({text: '<strong>Howdy! Hope you are doing good...</strong>',layout:'topRight',type:'information',timeout:15000});}, 7000);
-
-  setTimeout(function() {noty({text: 'This is an all in one theme which includes Front End, Admin & E-Commerce. Dont miss it. Grab it now',layout:'topRight',type:'alert',timeout:13000});}, 9000);
-
-});
-
-
-$(document).ready(function() {
-
-  $('.noty-alert').click(function (e) {
-      e.preventDefault();
-      noty({text: 'Some notifications goes here...',layout:'topRight',type:'alert',timeout:2000});
-  });
-
-  $('.noty-success').click(function (e) {
-      e.preventDefault();
-      noty({text: 'Some notifications goes here...',layout:'top',type:'success',timeout:2000});
-  });
-
-  $('.noty-error').click(function (e) {
-      e.preventDefault();
-      noty({text: 'Some notifications goes here...',layout:'topRight',type:'error',timeout:2000});
-  });
-
-  $('.noty-warning').click(function (e) {
-      e.preventDefault();
-      noty({text: 'Some notifications goes here...',layout:'bottom',type:'warning',timeout:2000});
-  });
-
-  $('.noty-information').click(function (e) {
-      e.preventDefault();
-      noty({text: 'Some notifications goes here...',layout:'topRight',type:'information',timeout:2000});
-  });
-
-});
-
 
 /* Date picker */
 
