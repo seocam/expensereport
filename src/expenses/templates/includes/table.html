@@ -13,7 +13,7 @@
         {% for row in data %}
         <tr>
           {% for field in row %}
-            <td>{{ field|safe|truncatechars:80 }}</td>
+            <td>{{ field|safe }}</td>
           {% endfor %}
         </tr>
         {% endfor %}

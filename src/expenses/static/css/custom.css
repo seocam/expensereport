@@ -32,3 +32,7 @@ header .header-data .hdata {
 .mcol-right {
     width: 70%;
 }
+
+.table-responsive td {
+    max-width: 200px;
+}
