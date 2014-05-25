@@ -14,25 +14,30 @@
             }
         };
 
-        var category_data = [
-        {% for expense in expense_by_category %}
-            {'label': '{{ expense.category }}' , 'data': {{ expense.amount__sum }} },
-        {% endfor %}
-        ];
-        $.plot($("#pie-chart-categories"), category_data, pie_chart_options);
+        {% if expense_by_category %}
+            var category_data = [
+            {% for expense in expense_by_category %}
+                {'label': '{{ expense.category }}' , 'data': {{ expense.amount__sum }} },
+            {% endfor %}
+            ];
+            $.plot($("#pie-chart-categories"), category_data, pie_chart_options);
+        {% endif %}
 
-        var attendee_data = [
-        {% for expense in expense_by_attendee %}
-            {'label': '{{ expense.attendee__first_name }}' ,
-             'data': {{ expense.amount__sum }} },
-        {% endfor %}
-        ];
-        $.plot($("#pie-chart-attendees"), attendee_data, pie_chart_options);
+        {% if not attendee and expense_by_attendee %}
+            var attendee_data = [
+            {% for expense in expense_by_attendee %}
+                {'label': '{{ expense.attendee__first_name }}' ,
+                 'data': {{ expense.amount__sum }} },
+            {% endfor %}
+            ];
+            $.plot($("#pie-chart-attendees"), attendee_data, pie_chart_options);
+        {% endif %}
     });
 {% endblock %}
 
 {% block matter %}
 
+{% if expense_by_category %}
 <div class="col-md-6">
   <div class="widget">
     <div class="widget-head">
@@ -49,7 +54,9 @@
     </div>
   </div>
 </div>
+{% endif %}
 
+{% if not attendee and expense_by_attendee %}
 <div class="col-md-6">
   <div class="widget">
     <div class="widget-head">
@@ -66,6 +73,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 
 <div class="col-md-12">
   <div class="widget">
