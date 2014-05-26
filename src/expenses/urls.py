@@ -9,9 +9,12 @@ router = routers.SimpleRouter()
 router.register(r'', ExpenseViewSet)
 
 
-urlpatterns = patterns('',
-    url(r'^$', 'expenses.views.dashboard', name='dashboard'),
-    url(r'^(?P<username>[\w_@+.-]+)/$', 'expenses.views.dashboard',
-        name='attendee'),
+urlpatterns = patterns('expenses.views',
+    url(r'^$', 'dashboard', name='dashboard'),
+    url(r'^summary/$', 'summary', name='summary'),
+    url(r'^attendee/(?P<username>[\w_@+.-]+)/$', 'dashboard', name='attendee'),
+)
+
+urlpatterns += patterns('',
     url(r'^api', include(router.urls)),
 )

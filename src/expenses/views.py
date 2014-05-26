@@ -69,3 +69,47 @@ def dashboard(request, username=None):
     }
 
     return render(request, 'dashboard.html', context)
+
+
+def summary(request):
+
+    qs = Expense.objects.values('attendee__first_name')
+    qs = qs.annotate(Sum('amount')).order_by()
+    qs = qs.values(
+        'attendee__paypalaccount__paypal_account',
+        'amount__sum',
+        'attendee__first_name',
+        'attendee__username',
+    )
+
+    expenses = []
+    for expense in qs:
+        user_link = reverse('expenses:attendee', kwargs={
+            'username': expense['attendee__username'],
+        })
+        user_name = expense['attendee__first_name']
+
+        expenses.append((
+            u'<a href="{}">{}</a>'.format(user_link, user_name),
+            expense['attendee__paypalaccount__paypal_account'],
+            expense['amount__sum'],
+            expense['amount__sum'],
+            u'<a href="{}">link</a>'.format(''),
+        ))
+
+    n_attendees = User.objects.count()
+    total_amount = Expense.objects.aggregate(Sum('amount'))
+
+    context = {
+        'headers': (
+            'Name',
+            'Paypal',
+            'Amount (BRL)',
+            'Amount (USD)',
+            'Receipts (.zip)',
+        ),
+        'data': expenses,
+        'n_attendees': n_attendees,
+        'total_amount': total_amount['amount__sum'],
+    }
+    return render(request, 'summary.html', context)

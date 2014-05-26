@@ -197,6 +197,7 @@
         </ul>-->
 
       </li>
+      <li><a href="{% url 'expenses:summary' %}"><i class="fa fa-table"></i> Summary</a></li>
     </ul>
   </div>
   <!-- Sidebar ends -->
@@ -206,7 +207,7 @@
 
     <!-- Page heading -->
     <div class="page-head">
-      <h2 class="pull-left"><i class="fa fa-home"></i> FISL 15 - Dashboard{% if attendee %} - <b>{{ attendee.first_name }}</b>{% endif %}</h2>
+      <h2 class="pull-left"><i class="fa fa-home"></i> {% block page-title %}FISL 15{% endblock %}</h2>
 
       <!-- Breadcrumb -->
       <div class="bread-crumb pull-right">

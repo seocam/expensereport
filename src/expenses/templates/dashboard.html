@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block page-title %}
+{{ block.super }} - Dashboard {% if attendee %} - <b>{{ attendee.first_name }}</b>{% endif %}
+{% endblock %}
 
 {% block inline-js %}
     $(function () {
