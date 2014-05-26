@@ -73,7 +73,7 @@ def dashboard(request, username=None):
 
     return render(request, 'dashboard.html', context)
 
-
+@login_required
 def summary(request):
 
     qs = Expense.objects.values('attendee__first_name')
