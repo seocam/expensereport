@@ -96,6 +96,11 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/expense/api/.*$'
 
+from decimal import Decimal
+
+BRL_USD_RATE = Decimal('2.25')
+PAYPAL_RATE = Decimal('1.07')
+
 try:
     from settings_local import *
 except ImportError:

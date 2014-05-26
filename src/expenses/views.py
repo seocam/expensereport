@@ -1,11 +1,14 @@
 # *-* coding: utf-8 *-*
 
+from decimal import Decimal
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -89,11 +92,14 @@ def summary(request):
         })
         user_name = expense['attendee__first_name']
 
+        amount_usd = (expense['amount__sum'] /
+                      settings.BRL_USD_RATE *
+                      settings.PAYPAL_RATE).quantize(Decimal('1.00'))
         expenses.append((
             u'<a href="{}">{}</a>'.format(user_link, user_name),
             expense['attendee__paypalaccount__paypal_account'],
             expense['amount__sum'],
-            expense['amount__sum'],
+            amount_usd,
             u'<a href="{}">link</a>'.format(''),
         ))
 
