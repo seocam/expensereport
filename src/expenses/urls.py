@@ -12,6 +12,7 @@ router.register(r'', ExpenseViewSet)
 urlpatterns = patterns('expenses.views',
     url(r'^$', 'dashboard', name='dashboard'),
     url(r'^summary/$', 'summary', name='summary'),
+    url(r'^summary/receipts/(?P<username>[\w_@+.-]+)/$', 'receipts', name='receipts'),
     url(r'^attendee/(?P<username>[\w_@+.-]+)/$', 'dashboard', name='attendee'),
 )
 

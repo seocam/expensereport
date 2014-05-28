@@ -1,7 +1,7 @@
 # *-* coding: utf-8 *-*
 
 from decimal import Decimal
-
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Sum
@@ -9,12 +9,15 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.utils.encoding import smart_str
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Expense
 from .serializers import ExpenseSerializer
+
+import os, zipfile, tempfile
 
 
 class ExpenseViewSet(viewsets.ModelViewSet):
@@ -82,6 +85,7 @@ def summary(request):
         'attendee__paypalaccount__paypal_account',
         'amount__sum',
         'attendee__first_name',
+        'attendee__last_name',
         'attendee__username',
     )
 
@@ -90,8 +94,8 @@ def summary(request):
         user_link = reverse('expenses:attendee', kwargs={
             'username': expense['attendee__username'],
         })
+        zip_link = 'receipts/' + expense['attendee__first_name']
         user_name = expense['attendee__first_name']
-
         amount_usd = (expense['amount__sum'] /
                       settings.BRL_USD_RATE *
                       settings.PAYPAL_RATE).quantize(Decimal('1.00'))
@@ -100,9 +104,8 @@ def summary(request):
             expense['attendee__paypalaccount__paypal_account'],
             expense['amount__sum'],
             amount_usd,
-            u'<a href="{}">link</a>'.format(''),
+            u'<a href="{}">link</a>'.format(zip_link),
         ))
-
     n_attendees = User.objects.count()
     total_amount = Expense.objects.aggregate(Sum('amount'))
 
@@ -119,3 +122,24 @@ def summary(request):
         'total_amount': total_amount['amount__sum'],
     }
     return render(request, 'summary.html', context)
+
+
+@login_required
+def receipts(request, username=None):
+
+    if username:
+        qs = Expense.objects.values('receipt').filter(attendee__first_name = username)
+        filename = '-'.join([username, 'receipts.zip'])
+        zf = zipfile.ZipFile(filename, "w", zipfile.ZIP_DEFLATED)
+        tempdir  = tempfile.mkdtemp()
+
+        for file in qs:
+            dir = settings.MEDIA_ROOT + file['receipt']
+            zf.write(dir)
+        zf.close()
+
+        response = HttpResponse(mimetype='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
+        response['X-Sendfile'] = smart_str(tempdir+filename)
+
+        return response
