@@ -1,9 +1,13 @@
 # *-* coding: utf-8 *-*
 
-from decimal import Decimal
+import os
+import zipfile
+import tempfile
 
+from decimal import Decimal
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -90,8 +94,11 @@ def summary(request):
         user_link = reverse('expenses:attendee', kwargs={
             'username': expense['attendee__username'],
         })
-        user_name = expense['attendee__first_name']
+        zip_link = reverse('expenses:receipts', kwargs={
+            'username': expense['attendee__username'],
+        })
 
+        user_name = expense['attendee__first_name']
         amount_usd = (expense['amount__sum'] /
                       settings.BRL_USD_RATE *
                       settings.PAYPAL_RATE).quantize(Decimal('1.00'))
@@ -100,9 +107,8 @@ def summary(request):
             expense['attendee__paypalaccount__paypal_account'],
             expense['amount__sum'],
             amount_usd,
-            u'<a href="{}">link</a>'.format(''),
+            u'<a href="{}">link</a>'.format(zip_link),
         ))
-
     n_attendees = User.objects.count()
     total_amount = Expense.objects.aggregate(Sum('amount'))
 
@@ -119,3 +125,33 @@ def summary(request):
         'total_amount': total_amount['amount__sum'],
     }
     return render(request, 'summary.html', context)
+
+
+@login_required
+def receipts(request, username=None):
+
+    # Get user
+    user = get_object_or_404(User, username=username)
+
+    # Check if the user has expenses
+    expenses = Expense.objects.filter(attendee_id=user.id)
+    if not expenses:
+        raise Http404('No Expenses for user {}'.format(user.username))
+
+    # Create zips folder on MEDIA_ROOT
+    zips_path = os.path.join(settings.MEDIA_ROOT, 'zips')
+    if not os.path.exists(zips_path):
+        os.mkdir(zips_path)
+
+    # Gets the file path for the zip that will be created now
+    filename = '-'.join([username, 'receipts.zip'])
+    file_path = os.path.join(zips_path, filename)
+
+    # Create the zip
+    zf = zipfile.ZipFile(file_path, "w", zipfile.ZIP_DEFLATED)
+    for expense in expenses:
+        zf.write(expense.receipt.path, expense.receipt.name)
+    zf.close()
+
+    # Redirect to the place where the zip will be hosted
+    return redirect(settings.MEDIA_URL + 'zips/' + filename)
