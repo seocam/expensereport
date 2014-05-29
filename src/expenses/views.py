@@ -96,7 +96,10 @@ def summary(request):
         user_link = reverse('expenses:attendee', kwargs={
             'username': expense['attendee__username'],
         })
-        zip_link = 'receipts/' + expense['attendee__first_name']
+        zip_link = reverse('expenses:receipts', kwargs={
+            'username': expense['attendee__username'],
+        })
+
         user_name = expense['attendee__first_name']
         amount_usd = (expense['amount__sum'] /
                       settings.BRL_USD_RATE *
