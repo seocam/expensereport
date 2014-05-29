@@ -1,9 +1,13 @@
 # *-* coding: utf-8 *-*
 
+import os
+import zipfile
+import tempfile
+
 from decimal import Decimal
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -16,8 +20,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Expense
 from .serializers import ExpenseSerializer
-
-import os, zipfile, tempfile
 
 
 class ExpenseViewSet(viewsets.ModelViewSet):
@@ -127,19 +129,28 @@ def summary(request):
 @login_required
 def receipts(request, username=None):
 
-    if username:
-        qs = Expense.objects.values('receipt').filter(attendee__first_name = username)
-        filename = '-'.join([username, 'receipts.zip'])
-        zf = zipfile.ZipFile(filename, "w", zipfile.ZIP_DEFLATED)
-        tempdir  = tempfile.mkdtemp()
+    # Get user
+    user = get_object_or_404(User, username=username)
 
-        for file in qs:
-            dir = settings.MEDIA_ROOT + file['receipt']
-            zf.write(dir)
-        zf.close()
+    # Check if the user has expenses
+    expenses = Expense.objects.filter(attendee_id=user.id)
+    if not expenses:
+        raise Http404('No Expenses for user {}'.format(user.username))
 
-        response = HttpResponse(mimetype='application/force-download')
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
-        response['X-Sendfile'] = smart_str(tempdir+filename)
+    # Create zips folder on MEDIA_ROOT
+    zips_path = os.path.join(settings.MEDIA_ROOT, 'zips')
+    if not os.path.exists(zips_path):
+        os.mkdir(zips_path)
 
-        return response
+    # Gets the file path for the zip that will be created now
+    filename = '-'.join([username, 'receipts.zip'])
+    file_path = os.path.join(zips_path, filename)
+
+    # Create the zip
+    zf = zipfile.ZipFile(file_path, "w", zipfile.ZIP_DEFLATED)
+    for expense in expenses:
+        zf.write(expense.receipt.path)
+    zf.close()
+
+    # Redirect to the place where the zip will be hosted
+    return redirect(settings.MEDIA_URL + 'zips/' + filename)
