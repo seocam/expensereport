@@ -152,7 +152,7 @@ def receipts(request, username=None):
     # Create the zip
     zf = zipfile.ZipFile(file_path, "w", zipfile.ZIP_DEFLATED)
     for expense in expenses:
-        zf.write(expense.receipt.path)
+        zf.write(expense.receipt.path, expense.receipt.name)
     zf.close()
 
     # Redirect to the place where the zip will be hosted
