@@ -13,7 +13,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.utils.encoding import smart_str
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -87,7 +86,6 @@ def summary(request):
         'attendee__paypalaccount__paypal_account',
         'amount__sum',
         'attendee__first_name',
-        'attendee__last_name',
         'attendee__username',
     )
 
